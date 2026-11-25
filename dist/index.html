@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Jämför möjliga pensionsutfall mellan traditionell försäkring och fondförsäkring.">
+  <meta name="theme-color" content="#102f2b">
+  <title>Pensionsbytet – jämför ditt möjliga utfall</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Pensionsbytet, startsida">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>Pensionsbytet</span>
+    </a>
+    <span class="top-note">Oberoende scenariokalkyl</span>
+  </header>
+
+  <main id="top">
+    <section class="intro" aria-labelledby="intro-title">
+      <div>
+        <p class="eyebrow">Se skillnaden innan du väljer</p>
+        <h1 id="intro-title">Vad kan ett pensionsbyte betyda för dig?</h1>
+      </div>
+      <p class="intro-copy">Jämför två möjliga framtider för ditt tjänstepensionskapital. Justera antagandena efter ditt eget besked – kalkylen räknar om direkt.</p>
+    </section>
+
+    <nav class="comparison-tabs" aria-label="Välj jämförelse">
+      <button class="comparison-tab is-active" type="button" data-plan="saflo" aria-pressed="true">
+        <span class="tab-kicker">Privatanställd arbetare · SAF-LO</span>
+        <strong>AMF traditionell <span aria-hidden="true">→</span> Folksam LO fond</strong>
+      </button>
+      <button class="comparison-tab" type="button" data-plan="akap" aria-pressed="false">
+        <span class="tab-kicker">Kommun &amp; region · AKAP-KR / KAP-KL</span>
+        <strong>KPA traditionell <span aria-hidden="true">→</span> Folksam LO fond</strong>
+      </button>
+    </nav>
+
+    <div class="workspace">
+      <section class="panel input-panel" aria-labelledby="input-heading">
+        <div class="section-head">
+          <div>
+            <span class="step-label">Dina uppgifter</span>
+            <h2 id="input-heading">Så ser ditt sparande ut</h2>
+          </div>
+          <button class="text-button" id="reset-button" type="button">Återställ</button>
+        </div>
+
+        <div class="field-grid">
+          <label class="field field-wide">
+            <span>Nuvarande pensionskapital</span>
+            <span class="input-wrap"><input id="capital" type="number" min="0" max="50000000" step="10000" value="500000" inputmode="numeric"><em>kr</em></span>
+          </label>
+          <label class="field">
+            <span>Din ålder</span>
+            <span class="input-wrap"><input id="age" type="number" min="18" max="79" step="1" value="45" inputmode="numeric"><em>år</em></span>
+          </label>
+          <label class="field">
+            <span>Pensionsålder</span>
+            <span class="input-wrap"><input id="retirement-age" type="number" min="55" max="85" step="1" value="67" inputmode="numeric"><em>år</em></span>
+          </label>
+          <label class="field field-wide">
+            <span>Ny inbetalning varje månad</span>
+            <span class="input-wrap"><input id="monthly" type="number" min="0" max="100000" step="100" value="2500" inputmode="numeric"><em>kr</em></span>
+            <small>Arbetsgivarens framtida premie. Sätt 0 om du bara vill jämföra befintligt kapital.</small>
+          </label>
+        </div>
+
+        <div class="assumption-title">
+          <div>
+            <span class="step-label">Antaganden</span>
+            <h2>Avkastning och avgifter</h2>
+          </div>
+          <button class="info-button" type="button" data-dialog-open="method-dialog" aria-label="Läs om hur kalkylen räknar">?</button>
+        </div>
+
+        <div class="option-card keep-option">
+          <div class="option-card-head">
+            <span class="option-icon shield-icon" aria-hidden="true"></span>
+            <div><small>Behåll</small><h3 id="keep-name">AMF traditionell</h3></div>
+            <span class="risk-tag risk-lower">Lägre risk</span>
+          </div>
+          <div class="mini-grid">
+            <label class="field compact"><span>Förväntad avkastning</span><span class="input-wrap"><input id="keep-return" type="number" min="-20" max="30" step="0.1" value="4.5" inputmode="decimal"><em>%/år</em></span></label>
+            <label class="field compact"><span>Rörlig avgift</span><span class="input-wrap"><input id="keep-fee" type="number" min="0" max="5" step="0.01" value="0.10" inputmode="decimal"><em>%/år</em></span></label>
+            <label class="field compact"><span>Fast avgift</span><span class="input-wrap"><input id="keep-fixed" type="number" min="0" max="5000" step="1" value="40" inputmode="numeric"><em>kr/år</em></span></label>
+            <label class="field compact"><span>Avgiftstak</span><span class="input-wrap"><input id="keep-cap" type="number" min="0" max="10000" step="10" value="400" inputmode="numeric"><em>kr/år</em></span></label>
+          </div>
+        </div>
+
+        <div class="versus" aria-hidden="true"><span>eller byt till</span></div>
+
+        <div class="option-card switch-option">
+          <div class="option-card-head">
+            <span class="option-icon chart-icon" aria-hidden="true"></span>
+            <div><small>Byt</small><h3>Folksam LO fond</h3></div>
+            <span class="risk-tag risk-higher">Högre risk</span>
+          </div>
+          <div class="mini-grid">
+            <label class="field compact"><span>Förväntad avkastning</span><span class="input-wrap"><input id="switch-return" type="number" min="-20" max="30" step="0.1" value="6" inputmode="decimal"><em>%/år</em></span></label>
+            <label class="field compact"><span>Total årlig avgift</span><span class="input-wrap"><input id="switch-fee" type="number" min="0" max="5" step="0.01" value="0.25" inputmode="decimal"><em>%/år</em></span></label>
+            <label class="field compact"><span>Fast avgift</span><span class="input-wrap"><input id="switch-fixed" type="number" min="0" max="5000" step="1" value="0" inputmode="numeric"><em>kr/år</em></span></label>
+            <label class="field compact"><span>Engångskostnad för flytt</span><span class="input-wrap"><input id="move-fee" type="number" min="0" max="10000" step="50" value="0" inputmode="numeric"><em>kr</em></span></label>
+          </div>
+        </div>
+
+        <details class="advanced">
+          <summary>Penningvärde och fler inställningar</summary>
+          <div class="advanced-content">
+            <label class="toggle-row">
+              <span><strong>Visa i dagens penningvärde</strong><small>Räknar bort antagen inflation från alla framtida belopp.</small></span>
+              <input id="real-values" type="checkbox" role="switch" checked>
+            </label>
+            <label class="field compact inflation-field"><span>Antagen inflation</span><span class="input-wrap"><input id="inflation" type="number" min="0" max="10" step="0.1" value="2" inputmode="decimal"><em>%/år</em></span></label>
+          </div>
+        </details>
+      </section>
+
+      <aside class="panel result-panel" aria-live="polite" aria-labelledby="result-heading">
+        <div class="result-topline">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span>Prognos vid <strong id="years-label">22 år</strong> till pension</span>
+          <span id="value-mode">Dagens penningvärde</span>
+        </div>
+        <div class="result-hero">
+          <p id="result-prefix">I grundscenariot kan ett byte ge</p>
+          <h2 id="result-heading"><span id="difference">+231 000</span> <small>kr</small></h2>
+          <p id="difference-caption">mer i pensionskapital vid 67 års ålder</p>
+        </div>
+
+        <div class="chart-legend" aria-hidden="true">
+          <span><i class="keep-line"></i><b id="keep-legend">Behåll AMF</b></span>
+          <span><i class="switch-line"></i><b>Byt till Folksam LO</b></span>
+        </div>
+        <div class="chart-wrap">
+          <svg id="growth-chart" viewBox="0 0 700 280" role="img" aria-label="Prognos över pensionskapitalets utveckling">
+            <defs>
+              <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#17a979" stop-opacity=".24"/><stop offset="100%" stop-color="#17a979" stop-opacity="0"/></linearGradient>
+            </defs>
+            <g id="grid-lines"></g>
+            <path id="switch-area" fill="url(#areaGradient)"></path>
+            <path id="keep-path" fill="none" stroke="#153d38" stroke-width="4" stroke-linecap="round"></path>
+            <path id="switch-path" fill="none" stroke="#17a979" stroke-width="4" stroke-linecap="round"></path>
+            <g id="chart-labels"></g>
+          </svg>
+        </div>
+
+        <div class="totals">
+          <div><span id="keep-total-label">Behåll AMF traditionell</span><strong id="keep-total">1 254 000 kr</strong><small id="keep-fees-total">Beräknade avgifter: 8 800 kr</small></div>
+          <div class="accent-total"><span>Byt till Folksam LO fond</span><strong id="switch-total">1 485 000 kr</strong><small id="switch-fees-total">Beräknade avgifter: 63 200 kr</small></div>
+        </div>
+
+        <div class="monthly-equivalent">
+          <span class="calendar-icon" aria-hidden="true"></span>
+          <p><span>Grovt omräknat till 20 års utbetalning</span><strong id="monthly-difference">cirka +963 kr/mån</strong></p>
+          <button class="info-button small" type="button" data-dialog-open="monthly-dialog" aria-label="Läs om månadsbeloppet">?</button>
+        </div>
+
+        <section class="scenario-section" aria-labelledby="scenario-heading">
+          <div class="scenario-head"><div><span class="step-label">Osäkerheten spelar roll</span><h3 id="scenario-heading">Tre möjliga scenarier</h3></div></div>
+          <div class="scenario-table" role="table" aria-label="Tre avkastningsscenarier">
+            <div class="scenario-row scenario-labels" role="row"><span role="columnheader">Scenario</span><span role="columnheader" id="scenario-keep-head">Behåll</span><span role="columnheader">Byt</span><span role="columnheader">Skillnad</span></div>
+            <div class="scenario-row" role="row"><span role="cell"><i class="scenario-dot low"></i>Svag marknad</span><span id="low-keep" role="cell"></span><span id="low-switch" role="cell"></span><strong id="low-diff" role="cell"></strong></div>
+            <div class="scenario-row is-base" role="row"><span role="cell"><i class="scenario-dot base"></i>Grundscenario</span><span id="base-keep" role="cell"></span><span id="base-switch" role="cell"></span><strong id="base-diff" role="cell"></strong></div>
+            <div class="scenario-row" role="row"><span role="cell"><i class="scenario-dot high"></i>Stark marknad</span><span id="high-keep" role="cell"></span><span id="high-switch" role="cell"></span><strong id="high-diff" role="cell"></strong></div>
+          </div>
+        </section>
+
+        <div class="risk-note">
+          <span aria-hidden="true">!</span>
+          <p><strong>Högre möjlig avkastning betyder högre risk.</strong> Fondförsäkring saknar den garanti som finns i traditionell försäkring. Utfallet kan bli både bättre och sämre än kalkylen.</p>
+        </div>
+      </aside>
+    </div>
+
+    <section class="source-section" aria-labelledby="source-heading">
+      <div><span class="step-label">Underlag</span><h2 id="source-heading">Kontrollera alltid mot ditt eget besked</h2></div>
+      <p>Kalkylens avgifter är startvärden från bolagens och valcentralernas publika information. Avtal, årgång, ålder, fondval, garanti och återbetalningsskydd kan ändra utfallet.</p>
+      <div class="source-links" id="source-links"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Pensionsbytet</strong> är en fristående scenariokalkyl och ger inte personlig finansiell rådgivning.</p>
+    <p>Senast kontrollerade startvärden: november 2026</p>
+  </footer>
+
+  <dialog id="method-dialog">
+    <button class="dialog-close" type="button" aria-label="Stäng">×</button>
+    <span class="step-label">Så räknar vi</span>
+    <h2>En prognos, inte ett löfte</h2>
+    <p>Kalkylen simulerar sparandet månad för månad. Inbetalningen läggs till, därefter beräknas avkastning och avgifter. Traditionell försäkrings avgiftstak tas med när det är angivet.</p>
+    <p>Avkastningsantagandena är nominella och konstanta över tiden. Verklig avkastning varierar och en annan ordning på upp- och nedgångar kan påverka resultatet.</p>
+    <p>Scenarierna använder lägre respektive högre avkastning än grundantagandet. De är inte sannolikhetsprognoser.</p>
+  </dialog>
+
+  <dialog id="monthly-dialog">
+    <button class="dialog-close" type="button" aria-label="Stäng">×</button>
+    <span class="step-label">Förenklad omräkning</span>
+    <h2>Vad betyder skillnaden per månad?</h2>
+    <p>Beloppet är bara skillnaden i slutkapital delad på 240 månader. Det tar inte hänsyn till fortsatt avkastning under utbetalning, skatt, livslängdsantaganden eller bolagens prognosränta. Se det som en storleksordning, inte ett pensionsbesked.</p>
+  </dialog>
+
+  <script src="./app.js"></script>
+</body>
+</html>
