@@ -63,10 +63,15 @@
             <span>Pensionsålder</span>
             <span class="input-wrap"><input id="retirement-age" type="number" min="55" max="85" step="1" value="67" inputmode="numeric"><em>år</em></span>
           </label>
-          <label class="field field-wide">
+          <label class="field">
             <span>Ny inbetalning varje månad</span>
             <span class="input-wrap"><input id="monthly" type="number" min="0" max="100000" step="100" value="2500" inputmode="numeric"><em>kr</em></span>
             <small>Arbetsgivarens framtida premie. Sätt 0 om du bara vill jämföra befintligt kapital.</small>
+          </label>
+          <label class="field">
+            <span>Årlig löneökning</span>
+            <span class="input-wrap"><input id="wage-growth" type="number" min="-10" max="20" step="0.1" value="1.9" inputmode="decimal"><em>%/år</em></span>
+            <small>Ökar framtida pensionspremier i samma takt som lönen.</small>
           </label>
         </div>
 
@@ -85,10 +90,11 @@
             <span class="risk-tag risk-lower">Lägre risk</span>
           </div>
           <div class="mini-grid">
-            <label class="field compact"><span>Förväntad avkastning</span><span class="input-wrap"><input id="keep-return" type="number" min="-20" max="30" step="0.1" value="4.5" inputmode="decimal"><em>%/år</em></span></label>
-            <label class="field compact"><span>Rörlig avgift</span><span class="input-wrap"><input id="keep-fee" type="number" min="0" max="5" step="0.01" value="0.10" inputmode="decimal"><em>%/år</em></span></label>
+            <label class="field compact"><span>Avkastningsantagande</span><span class="input-wrap"><input id="keep-return" type="number" min="-20" max="30" step="0.1" value="4.5" inputmode="decimal"><em>%/år</em></span></label>
+            <label class="field compact"><span>Rörlig försäkringsavgift</span><span class="input-wrap"><input id="keep-fee" type="number" min="0" max="5" step="0.001" value="0.10" inputmode="decimal"><em>%/år</em></span></label>
             <label class="field compact"><span>Fast avgift</span><span class="input-wrap"><input id="keep-fixed" type="number" min="0" max="5000" step="1" value="40" inputmode="numeric"><em>kr/år</em></span></label>
             <label class="field compact"><span>Avgiftstak</span><span class="input-wrap"><input id="keep-cap" type="number" min="0" max="10000" step="10" value="400" inputmode="numeric"><em>kr/år</em></span></label>
+            <label class="field compact"><span>Kapitalförvaltningskostnad</span><span class="input-wrap"><input id="keep-management" type="number" min="0" max="5" step="0.001" value="0.034" inputmode="decimal"><em>%/år</em></span><small>Belastas utöver avgiftstaket.</small></label>
           </div>
         </div>
 
@@ -101,8 +107,8 @@
             <span class="risk-tag risk-higher">Högre risk</span>
           </div>
           <div class="mini-grid">
-            <label class="field compact"><span>Förväntad avkastning</span><span class="input-wrap"><input id="switch-return" type="number" min="-20" max="30" step="0.1" value="6" inputmode="decimal"><em>%/år</em></span></label>
-            <label class="field compact"><span>Total årlig avgift</span><span class="input-wrap"><input id="switch-fee" type="number" min="0" max="5" step="0.01" value="0.25" inputmode="decimal"><em>%/år</em></span></label>
+            <label class="field compact"><span>Avkastningsantagande</span><span class="input-wrap"><input id="switch-return" type="number" min="-20" max="30" step="0.1" value="6" inputmode="decimal"><em>%/år</em></span></label>
+            <label class="field compact"><span>Årlig avgift vid start</span><span class="input-wrap"><input id="switch-fee" type="number" min="0" max="5" step="0.01" value="0.25" inputmode="decimal"><em>%/år</em></span><small id="switch-fee-note">Trappas ned med risken från 61 års ålder.</small></label>
             <label class="field compact"><span>Fast avgift</span><span class="input-wrap"><input id="switch-fixed" type="number" min="0" max="5000" step="1" value="0" inputmode="numeric"><em>kr/år</em></span></label>
             <label class="field compact"><span>Engångskostnad för flytt</span><span class="input-wrap"><input id="move-fee" type="number" min="0" max="10000" step="50" value="0" inputmode="numeric"><em>kr</em></span></label>
           </div>
@@ -132,6 +138,35 @@
           <p id="difference-caption">mer i pensionskapital vid 67 års ålder</p>
         </div>
 
+        <section class="before-after" aria-label="Tydlig jämförelse före och efter byte till Folksam LO fond">
+          <article class="comparison-card comparison-before">
+            <div class="comparison-card-top"><span>Före</span><i class="option-icon shield-icon" aria-hidden="true"></i></div>
+            <h3 id="before-name">AMF traditionell</h3>
+            <p class="comparison-capital"><small>Kapital vid pension</small><strong id="before-capital">–</strong></p>
+            <div class="comparison-facts">
+              <p><span>Verifierad avgift</span><strong id="before-fee-fact">–</strong></p>
+              <p><span>Historiskt 5-årssnitt</span><strong id="before-history">–</strong></p>
+            </div>
+            <div class="comparison-tags"><span>Garanti</span><span>Lägre risk</span></div>
+          </article>
+          <div class="switch-marker" aria-hidden="true"><span>BYTE</span><b>→</b></div>
+          <article class="comparison-card comparison-after">
+            <div class="comparison-card-top"><span>Efter</span><i class="option-icon chart-icon" aria-hidden="true"></i></div>
+            <h3>Folksam LO fond</h3>
+            <p class="comparison-capital"><small>Kapital vid pension</small><strong id="after-capital">–</strong></p>
+            <div class="comparison-facts">
+              <p><span>Verifierad avgift</span><strong id="after-fee-fact">–</strong></p>
+              <p><span>Historiskt 5-årssnitt</span><strong id="after-history">–</strong></p>
+            </div>
+            <div class="comparison-tags after-tags"><span>Ingen garanti</span><span>Högre risk</span></div>
+          </article>
+          <div class="comparison-delta">
+            <span>Skillnad i grundscenariot</span>
+            <strong id="visual-difference">–</strong>
+            <small id="premium-growth-note">–</small>
+          </div>
+        </section>
+
         <div class="chart-legend" aria-hidden="true">
           <span><i class="keep-line"></i><b id="keep-legend">Behåll AMF</b></span>
           <span><i class="switch-line"></i><b>Byt till Folksam LO</b></span>
@@ -149,9 +184,9 @@
           </svg>
         </div>
 
-        <div class="totals">
-          <div><span id="keep-total-label">Behåll AMF traditionell</span><strong id="keep-total">1 254 000 kr</strong><small id="keep-fees-total">Beräknade avgifter: 8 800 kr</small></div>
-          <div class="accent-total"><span>Byt till Folksam LO fond</span><strong id="switch-total">1 485 000 kr</strong><small id="switch-fees-total">Beräknade avgifter: 63 200 kr</small></div>
+        <div class="fee-summary">
+          <p><span id="keep-total-label">Behåll AMF traditionell</span><strong id="keep-fees-total">Beräknade avgifter: –</strong></p>
+          <p><span>Byt till Folksam LO fond</span><strong id="switch-fees-total">Beräknade avgifter: –</strong></p>
         </div>
 
         <div class="monthly-equivalent">
@@ -179,7 +214,7 @@
 
     <section class="source-section" aria-labelledby="source-heading">
       <div><span class="step-label">Underlag</span><h2 id="source-heading">Kontrollera alltid mot ditt eget besked</h2></div>
-      <p>Kalkylens avgifter är startvärden från bolagens och valcentralernas publika information. Avtal, årgång, ålder, fondval, garanti och återbetalningsskydd kan ändra utfallet.</p>
+      <p>Kalkylens avgifter har verifierats mot bolagens och valcentralernas publika information den 25 november 2026. Avtal, årgång, ålder, fondval, garanti och återbetalningsskydd kan ändra ditt faktiska utfall.</p>
       <div class="source-links" id="source-links"></div>
     </section>
   </main>
@@ -193,7 +228,8 @@
     <button class="dialog-close" type="button" aria-label="Stäng">×</button>
     <span class="step-label">Så räknar vi</span>
     <h2>En prognos, inte ett löfte</h2>
-    <p>Kalkylen simulerar sparandet månad för månad. Inbetalningen läggs till, därefter beräknas avkastning och avgifter. Traditionell försäkrings avgiftstak tas med när det är angivet.</p>
+    <p>Kalkylen simulerar sparandet månad för månad. Pensionspremien ökar årsvis med din angivna löneökning. Därefter beräknas avkastning och avgifter.</p>
+    <p>För traditionell försäkring skiljer kalkylen på försäkringsavgiften som omfattas av avgiftstaket och kapitalförvaltningskostnaden som tas ut utöver taket. Vid KPA-flytt ingår även aktuell flyttavgift.</p>
     <p>Avkastningsantagandena är nominella och konstanta över tiden. Verklig avkastning varierar och en annan ordning på upp- och nedgångar kan påverka resultatet.</p>
     <p>Scenarierna använder lägre respektive högre avkastning än grundantagandet. De är inte sannolikhetsprognoser.</p>
   </dialog>
